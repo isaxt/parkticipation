@@ -72,7 +72,6 @@ function sampleCell(ctx, cx, cy, cw, ch) {
   return { r: rSum / n, g: gSum / n, b: bSum / n };
 }
 
-// ─── Frame Loop ───────────────────────────────────────────────────────────────
 function processFrame() {
   animId = requestAnimationFrame(processFrame);
   if (!video || video.readyState < 2) return;
@@ -118,7 +117,6 @@ function processFrame() {
   updateBoard();
 }
 
-// ─── Board DOM ────────────────────────────────────────────────────────────────
 function buildBoard() {
   boardEl.innerHTML = '';
   for (let i = 0; i < GRID * GRID; i++) {
@@ -142,7 +140,7 @@ function updateBoard() {
   }
 }
 
-// ─── Legend ───────────────────────────────────────────────────────────────────
+//key
 function buildLegend() {
   const grid = document.getElementById('legendGrid');
   Object.entries(COLOR_ATTRIBUTES).forEach(([key, info]) => {
@@ -159,7 +157,6 @@ function buildLegend() {
   });
 }
 
-// ─── Camera ───────────────────────────────────────────────────────────────────
 async function startCamera() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -176,7 +173,7 @@ async function startCamera() {
   }
 }
 
-// ─── Init ─────────────────────────────────────────────────────────────────────
+//in it
 window.addEventListener('DOMContentLoaded', () => {
   video        = document.getElementById('video');
   overlay      = document.getElementById('overlay');
@@ -204,7 +201,7 @@ window.addEventListener('DOMContentLoaded', () => {
     sVal.textContent = e.target.value;
   });
 
-  // Calibrate: snapshot current board as "empty" baseline (placeholder for future use)
+  // calibrate: snapshot current board as "empty" baseline (placeholder for future use)
   document.getElementById('calibrateBtn').addEventListener('click', () => {
     boardState = Array.from({ length: GRID }, () => Array(GRID).fill('empty'));
     updateBoard();

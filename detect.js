@@ -1,4 +1,4 @@
-// Each entry: display hex used in the UI, and HSV detection ranges (h:0-360, s:0-255, v:0-255)
+//HSV detection ranges (h:0-360, s:0-255, v:0-255)
 const COLORS = {
   trash_can:      { label: 'Trash Can',      hex: '#111111' },
   subway_station: { label: 'Subway Station', hex: '#0d2b0d' },
@@ -26,7 +26,7 @@ let satThreshold   = 30;
 
 let video, overlay, overlayCtx, sampleCanvas, sampleCtx, boardEl;
 
-// ─── Color Math ──────────────────────────────────────────────────────────────
+// color math thanks random github gist: https://gist.github.com/mjackson/5311256
 
 function rgbToHsv(r, g, b) {
   r /= 255; g /= 255; b /= 255;
@@ -45,61 +45,57 @@ function rgbToHsv(r, g, b) {
 }
 
 // Returns a COLORS key string, or null for unrecognized/empty.
-// Checks proceed from dark/unsaturated → saturated, most specific first.
 function classifyColor(r, g, b) {
   const { h, s, v } = rgbToHsv(r, g, b);
 
-  // ── Dark ──────────────────────────────────────────────────────────────────
-  if (v < blackThreshold) return 'trash_can';
-
-  // Very dark green (subway station): green hue, saturated, very low value
-  if (h >= 100 && h <= 145 && s > 120 && v >= 20 && v < 85) return 'subway_station';
-
-  // Dark navy blue (fountain): blue hue, saturated, low value
-  if (h >= 198 && h <= 232 && s > 150 && v < 150) return 'fountain';
-
-  // Dark brown (bench): warm hue, saturated, low-medium value
-  if (h >= 18 && h <= 40 && s > 130 && v >= 40 && v < 140) return 'bench';
-
-  // ── Neutral / Low-saturation ──────────────────────────────────────────────
-  // Concrete tile: gray with blue cast, medium value
+  //TILE COLOR RECOG
+  // concrete tile
   if (s < 55 && h >= 185 && h <= 235 && v >= 120 && v < 205) return 'concrete_tile';
 
-  // Grass tile: pale mint, very low saturation, green hue, high value
+  // grass tile
   if (h >= 90 && h <= 150 && s >= satThreshold && s < 75 && v > 185) return 'grass_tile';
 
-  // Water tile: pale blue, low-medium saturation, very high value
+  // water tile
   if (h >= 190 && h <= 222 && s >= satThreshold && s < 120 && v > 210) return 'water_tile';
 
-  // Dirt tile: warm tan, medium saturation, medium-high value
+  // dirt tile; this one is a little sussy w the other browns will test furher
   if (h >= 22 && h <= 48 && s >= 40 && s < 140 && v >= 130 && v < 220) return 'dirt_tile';
 
-  // ── Saturated ─────────────────────────────────────────────────────────────
-  // Bright green (tree): pure lime, very saturated, bright
+//OBJECTS
+  //black trash can
+  if (v < blackThreshold) return 'trash_can';
+
+  //dark green subway station
+  if (h >= 100 && h <= 145 && s > 120 && v >= 20 && v < 85) return 'subway_station';
+
+  //navy blue fountain
+  if (h >= 198 && h <= 232 && s > 150 && v < 150) return 'fountain';
+
+  //dark brown bench
+  if (h >= 18 && h <= 40 && s > 130 && v >= 40 && v < 140) return 'bench';
+
+  //lime tree
   if (h >= 100 && h <= 145 && s >= 200 && v >= 160) return 'tree';
 
-  // Cyan/turquoise (reg fence): H between green and blue, very saturated
+  //cyan regular fence
   if (h >= 145 && h <= 178 && s >= 180 && v >= 180) return 'reg_fence';
 
-  // Yellow (lights/lamps)
+  //yellow lights/lamps
   if (h >= 42 && h <= 68 && s >= 180 && v >= 180) return 'lights_lamps';
 
-  // Orange (dog park)
+  //orange dog park
   if (h >= 15 && h <= 42 && s >= 160 && v >= 160) return 'dog_park';
 
-  // Red (spiked fence): wraps around 0°
+  //red spiked fence
   if ((h < 12 || h >= 348) && s >= 180 && v >= 90) return 'spiked_fence';
 
-  // Purple (bathroom)
+  //purple bathroom
   if (h >= 255 && h <= 298 && s >= 120 && v >= 140) return 'bathroom';
 
-  // Pink (playground): magenta-pink
+  //pink playground
   if (h >= 298 && h <= 348 && s >= 75 && v >= 180) return 'playground';
-
   return null;
 }
-
-// ─── Cell Sampling ───────────────────────────────────────────────────────────
 
 function sampleCell(ctx, cx, cy, cw, ch) {
   const m = 0.2;
@@ -114,8 +110,6 @@ function sampleCell(ctx, cx, cy, cw, ch) {
   }
   return { r: rSum / n, g: gSum / n, b: bSum / n };
 }
-
-// ─── Frame Loop ──────────────────────────────────────────────────────────────
 
 function processFrame() {
   animId = requestAnimationFrame(processFrame);
@@ -162,8 +156,7 @@ function processFrame() {
   updateBoard();
 }
 
-// ─── Board DOM ───────────────────────────────────────────────────────────────
-
+//board dom
 function buildBoard() {
   boardEl.innerHTML = '';
   for (let i = 0; i < GRID * GRID; i++) {
@@ -196,8 +189,7 @@ function updateBoard() {
   }
 }
 
-// ─── Legend ──────────────────────────────────────────────────────────────────
-
+//temp here
 function buildLegend() {
   const legend = document.getElementById('legend');
   Object.entries(COLORS).forEach(([, info]) => {
@@ -212,8 +204,7 @@ function buildLegend() {
   });
 }
 
-// ─── Camera ──────────────────────────────────────────────────────────────────
-
+//start camera and processing
 async function startCamera() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -230,8 +221,7 @@ async function startCamera() {
   }
 }
 
-// ─── Init ────────────────────────────────────────────────────────────────────
-
+//init
 window.addEventListener('DOMContentLoaded', () => {
   video        = document.getElementById('video');
   overlay      = document.getElementById('overlay');
@@ -244,14 +234,16 @@ window.addEventListener('DOMContentLoaded', () => {
   buildLegend();
 
   document.getElementById('startBtn').addEventListener('click', startCamera);
-
   document.getElementById('resetBtn').addEventListener('click', () => {
     boardState = Array.from({ length: GRID }, () => Array(GRID).fill(null));
     updateBoard();
   });
 
-  const blackSlider = document.getElementById('blackThreshold');
-  const satSlider   = document.getElementById('satThreshold');
+  
+
+  //might remove these later if we can get autocalibration lol
+  const blackSlider = document.getElementById('blackThreshold'); //adjuster
+  const satSlider   = document.getElementById('satThreshold'); //adjuster
 
   blackSlider.addEventListener('input', e => {
     blackThreshold = +e.target.value;
