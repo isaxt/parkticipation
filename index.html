@@ -3,50 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parkticipation</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>parkticipation color detecting test</title>
 </head>
 <body>
-    <div class="app">
-        <main>
-            <section class="camera-section">
-                <h2>Camera Feed</h2>
-                <div class="camera-container">
-                    <video id="video" autoplay playsinline muted></video>
-                    <canvas id="overlay" class="overlay"></canvas>
-                </div>
-                <div class="camera-controls">
-                    <button id="startBtn">Start Camera</button>
-                    <button id="calibrateBtn" disabled>Calibrate Grid</button>
-                </div>
-                <details class="calibration">
-                    <summary>Thresholds</summary>
-                    <label>
-                        Black cutoff (brightness)
-                        <input type="range" id="brightnessThreshold" min="10" max="120" value="40">
-                        <span id="brightnessVal">40</span>
-                    </label>
-                    <label>
-                        Gray cutoff (saturation)
-                        <input type="range" id="saturationThreshold" min="10" max="120" value="45">
-                        <span id="saturationVal">45</span>
-                    </label>
-                </details>
-            </section>
-
-            <section class="board-section">
-                <h2>Board State (8 × 8)</h2>
-                <div id="board" class="board"></div>
-            </section>
-        </main>
-
-        <section class="legend">
-            <h2>Color Legend</h2>
-            <div class="legend-grid" id="legendGrid"></div>
-        </section>
-    </div>
-
-    <canvas id="sampleCanvas"></canvas>
-    <script src="temp.js"></script>
+    
 </body>
+<script src="./temp.js"></script>
 </html>

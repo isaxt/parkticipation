@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>parkticipation — detect</title>
+    <link rel="stylesheet" href="detect.css">
+</head>
+<body>
+    <div class="app">
+        <main>
+            <section class="camera-section">
+                <h2>Camera</h2>
+                <div class="camera-container">
+                    <video id="video" autoplay playsinline muted></video>
+                    <canvas id="overlay" class="overlay"></canvas>
+                </div>
+                <div class="camera-controls">
+                    <button id="startBtn">Start Camera</button>
+                    <button id="resetBtn" disabled>Reset Board</button>
+                </div>
+                <details class="calibration">
+                    <summary>Thresholds</summary>
+                    <label>
+                        Black cutoff
+                        <input type="range" id="blackThreshold" min="5" max="80" value="35">
+                        <span id="blackVal">35</span>
+                    </label>
+                    <label>
+                        Min saturation
+                        <input type="range" id="satThreshold" min="5" max="80" value="30">
+                        <span id="satVal">30</span>
+                    </label>
+                </details>
+            </section>
+
+            <section class="board-section">
+                <h2>Board (8 × 8)</h2>
+                <div id="board" class="board"></div>
+            </section>
+        </main>
+
+        <section class="legend-section">
+            <h2>Color Key</h2>
+            <div id="legend" class="legend"></div>
+        </section>
+    </div>
+
+    <canvas id="sampleCanvas"></canvas>
+    <script src="detect.js"></script>
+</body>
+</html>
