@@ -2,7 +2,7 @@
 
 body {
   font-family: system-ui, -apple-system, sans-serif;
-  background: #000000;
+  background: #3893D5;
   color: #e0e0e0;
   min-height: 100vh;
 }
@@ -25,7 +25,7 @@ section h2 {
   font-size: .75rem;
   text-transform: uppercase;
   letter-spacing: .12em;
-  color: #555;
+  color: #ffffff;
   margin-bottom: .65rem;
 }
 
@@ -34,7 +34,7 @@ section h2 {
   position: relative;
   width: 100%;
   aspect-ratio: 1;
-  background: #111;
+  background: #f6f6f6;
   overflow: hidden;
   border: 1px solid #222;
 }
@@ -70,7 +70,7 @@ button {
 }
 button:disabled { opacity: .35; cursor: default; }
 
-#startBtn  { background: #3a9a3a; color: #000000; }
+#startBtn  { background: #3a9a3a; color: #ffffff; }
 #resetBtn  { background: #000000; color: #aaa; border: 1px solid #333; }
 
 .calibration {
@@ -96,7 +96,6 @@ button:disabled { opacity: .35; cursor: default; }
 .calibration input[type=range] { flex: 1; }
 .calibration span { width: 2ch; text-align: right; }
 
-/* ── Board ── */
 .board {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -105,7 +104,7 @@ button:disabled { opacity: .35; cursor: default; }
 }
 
 .board-cell {
-  background: #1a1a2a;
+  background: #f6f6f6;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -122,7 +121,7 @@ button:disabled { opacity: .35; cursor: default; }
   font-weight: 700;
   text-align: center;
   color: #fff;
-  text-shadow: 0 0 4px rgba(0,0,0,.8);
+  text-shadow: 0 0 4px rgba(236, 236, 236, 0.8);
   line-height: 1.1;
   padding: 1px;
   word-break: break-word;
@@ -144,7 +143,7 @@ button:disabled { opacity: .35; cursor: default; }
   display: flex;
   align-items: center;
   gap: .5rem;
-  background: #14141f;
+  background: #dfdfdf;
   padding: .4rem .65rem;
   font-size: .8rem;
   border: 1px solid #1e1e2e;
