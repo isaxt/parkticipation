@@ -18,9 +18,22 @@
                 <div class="camera-controls">
                     <button id="startBtn">Start Camera</button>
                     <button id="resetBtn" disabled>Reset Board</button>
+                    <button id="toggleBtn" disabled class="active">Grid Only</button>
+                    <button id="tilesBtn" disabled>Start Tiles</button>
+                    <button id="objectsBtn" disabled>Start Objects</button>
                 </div>
                 <details class="calibration">
                     <summary>Thresholds</summary>
+                    <label>
+                        Brightness
+                        <input type="range" id="brightnessSlider" min="80" max="300" value="100">
+                        <span id="brightnessVal">100</span>%
+                    </label>
+                    <label>
+                        Contrast
+                        <input type="range" id="contrastSlider" min="80" max="300" value="100">
+                        <span id="contrastVal">100</span>%
+                    </label>
                     <label>
                         Black cutoff
                         <input type="range" id="blackThreshold" min="5" max="80" value="35">

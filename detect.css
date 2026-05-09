@@ -72,6 +72,12 @@ button:disabled { opacity: .35; cursor: default; }
 
 #startBtn  { background: #3a9a3a; color: #ffffff; }
 #resetBtn  { background: #000000; color: #aaa; border: 1px solid #333; }
+#toggleBtn  { background: #1a1a2e; color: #aaa; border: 1px solid #333; }
+#toggleBtn.active  { background: #3a9a3a; color: #ffffff; }
+#tilesBtn   { background: #1a1a2e; color: #aaa; border: 1px solid #333; }
+#tilesBtn.active   { background: #2a6496; color: #ffffff; }
+#objectsBtn { background: #1a1a2e; color: #aaa; border: 1px solid #333; }
+#objectsBtn.active { background: #7b3f9e; color: #ffffff; }
 
 .calibration {
   margin-top: .7rem;
@@ -98,7 +104,6 @@ button:disabled { opacity: .35; cursor: default; }
 
 .board {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
   gap: 2px;
   aspect-ratio: 1;
 }
