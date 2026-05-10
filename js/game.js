@@ -147,7 +147,7 @@ const ENTERS = {
       wrapper.innerHTML = `
         <div class="flip-inner" id="flip-${i}">
           <div class="flip-front">
-            <img src="image/cards/card-back-1.png" alt="card back">
+            <img src="image/GUI/card-back.png" alt="card back">
           </div>
           <div class="flip-back">
             <img src="${role.card}" alt="${role.name}">

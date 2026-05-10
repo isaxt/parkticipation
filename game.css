@@ -1,4 +1,4 @@
-/* ─── Local fonts ───────────────────────────────────────────────────────────── */
+/* fonts*/
 @font-face { font-family:'FormaDJR'; src:url('fonts/FormaDJRText-ExtraLight-Testing.otf') format('opentype'); font-weight:200; font-style:normal; }
 @font-face { font-family:'FormaDJR'; src:url('fonts/FormaDJRText-ExtraLightItalic-Testing.otf') format('opentype'); font-weight:200; font-style:italic; }
 @font-face { font-family:'FormaDJR'; src:url('fonts/FormaDJRText-Light-Testing.otf') format('opentype'); font-weight:300; font-style:normal; }
@@ -14,7 +14,7 @@
 @font-face { font-family:'FormaDJR'; src:url('fonts/FormaDJRText-Black-Testing.otf') format('opentype'); font-weight:900; font-style:normal; }
 @font-face { font-family:'FormaDJR'; src:url('fonts/FormaDJRText-BlackItalic-Testing.otf') format('opentype'); font-weight:900; font-style:italic; }
 
-/* ─── Reset & Base ─────────────────────────────────────────────────────────── */
+/*  Reset & Base */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -92,7 +92,7 @@ html, body {
 
 .lobby-yawp {
   font-family: var(--font);
-  font-size: clamp(5rem, 14vw, 13rem);
+  font-size: clamp(1rem, 14vw, 2rem);
   line-height: 0.88;
   letter-spacing: 0.02em;
   color: var(--white);
@@ -144,7 +144,7 @@ html, body {
 
 .lobby-spacer { }
 
-/* Bottom bar */
+/* bottom bar */
 .lobby-bottom {
   display: grid;
   grid-template-columns: 30vw 1fr;
@@ -205,9 +205,7 @@ html, body {
 }
 
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   ONBOARDING INTRO SCREENS (Desktop-30 → 35)
-   ══════════════════════════════════════════════════════════════════════════════ */
+/* ONBOARDING INTRO SCREENS */
 .intro-screen {
   background: var(--bright-blue);
   /* column flex (inherited from .screen.active): justify = vertical, align = horizontal */
@@ -225,7 +223,7 @@ html, body {
   max-width: 68vw;
 }
 
-/* Round breakdown screen (intro-3) */
+/* round breakdown screen (intro-3) */
 .intro-text--rounds {
   display: flex;
   flex-direction: column;
@@ -244,10 +242,7 @@ html, body {
   color: var(--white);
 }
 
-
-/* ══════════════════════════════════════════════════════════════════════════════
-   CARD DEAL
-   ══════════════════════════════════════════════════════════════════════════════ */
+/* ROLE ASSIGN */
 #screen-card-deal {
   align-items: flex-end;
   justify-content: center;
@@ -304,9 +299,7 @@ html, body {
 }
 
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   ROLE REVEAL
-   ══════════════════════════════════════════════════════════════════════════════ */
+/* role reveal */
 #screen-role-reveal {
   background: var(--blue);
   align-items: center;
@@ -339,8 +332,6 @@ html, body {
   align-items: center;
   justify-content: center;
 }
-
-/* Flip card */
 .flip-card {
   width: 17vw;
   max-width: 240px;
@@ -378,9 +369,7 @@ html, body {
 }
 
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   STAGE INTRO (R1 & R2)
-   ══════════════════════════════════════════════════════════════════════════════ */
+/* stage intro (R1 & R2)` */
 #screen-r1-intro,
 #screen-r2-intro {
   background: var(--dk-green);
@@ -429,9 +418,7 @@ html, body {
 }
 
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   PLAY SCREENS (R1 & R2)
-   ══════════════════════════════════════════════════════════════════════════════ */
+/* PLAY SCREENS (R1 & R2) */
 #screen-r1-play,
 #screen-r2-play {
   background: var(--dk-green);
@@ -539,9 +526,7 @@ html, body {
 }
 
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   ROLE CHIPS (small card + dots, used in play/discuss)
-   ══════════════════════════════════════════════════════════════════════════════ */
+/* role card CHIPS (small card + dots, used in play/discuss) */
 .role-chip {
   display: flex;
   align-items: center;
@@ -623,9 +608,7 @@ html, body {
 .vr-list strong { color: var(--white); }
 
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   DISCUSSION SCREENS
-   ══════════════════════════════════════════════════════════════════════════════ */
+/*discussion screens */
 #screen-r1-discuss,
 #screen-r2-discuss {
   background: var(--md-green);
@@ -701,9 +684,7 @@ html, body {
 }
 
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   ADJUSTMENT SCREENS (R1 & R2 RESULT)
-   ══════════════════════════════════════════════════════════════════════════════ */
+/*ADJUSTMENT SCREENS (R1 & R2 RESULT) */
 #screen-r1-vote,
 #screen-r2-vote {
   background: var(--dk-green);
@@ -807,9 +788,8 @@ html, body {
 }
 
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   END SCREEN
-   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* end screen */
 #screen-end {
   background: var(--dk-green);
   align-items: center;
