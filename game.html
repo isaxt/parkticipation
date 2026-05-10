@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YAWP :D</title>
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+
+<!-- camera shit -->
+<div id="cam-mount" style="display:none; width:100%; height:100%; position:relative;">
+  <video id="game-video" autoplay playsinline muted></video>
+  <canvas id="game-overlay" class="cam-overlay"></canvas>
+</div>
+<canvas id="game-sample" style="display:none"></canvas>
+
+<!-- @ KELLY: ADD AMBIENT PARK SOUND  -->
+
+<!-- intro/start screen -->
+<div class="screen" id="screen-lobby">
+  <div class="lobby-grid">
+
+    <div class="lobby-brand">
+      <div class="lobby-leaf">
+        <img src="image/park-logo.png" alt="PAR[K]TICIPATION logo">
+      </div>
+      <h1 class="lobby-yawp">YAWP</h1>
+      <p class="lobby-byline">by par[k]ticipation</p>
+    </div>
+
+    <div class="lobby-rule-divider"></div>
+
+    <div class="lobby-rules">
+      <h2 class="rules-title">RULES:</h2>
+      <ul class="rules-list">
+        <li>Build/design for your assigned role</li>
+        <li>Rounds last 2 minutes</li>
+        <li>Voting lasts 30 seconds</li>
+        <li>Pay attention to what your park looks like!</li>
+      </ul>
+    </div>
+
+    <div class="lobby-rule-divider"></div>
+    <div class="lobby-spacer"></div>
+  </div>
+
+  <div class="lobby-bottom">
+    <div class="lobby-players">
+      <span class="lobby-players-label">4 PLAYERS JOINED</span>
+      <div class="lobby-dots">
+        <span class="ldot"></span><span class="ldot"></span>
+        <span class="ldot"></span><span class="ldot"></span>
+      </div>
+    </div>
+    <!-- <div class="lobby-role-strip" id="lobby-role-strip"></div> -->
+  </div>
+
+  <div class="lobby-click-hint">click anywhere to begin</div>
+</div>
+
+
+<!-- onboarding -->
+<div class="screen intro-screen" id="screen-intro-1">
+  <p class="intro-text">Before the game starts, you<br>will each be assigned a role.</p>
+</div>
+
+<div class="screen intro-screen" id="screen-intro-2">
+  <p class="intro-text">Your goal is to build and design<br>a park for New Yorkers based<br>on your role.</p>
+</div>
+
+<div class="screen intro-screen" id="screen-intro-3">
+  <div class="intro-text intro-text--rounds">
+    <p class="intro-rounds-header">There are two rounds to build<br>and design your park:</p>
+    <p class="intro-rounds-item">Round 1: Tile Placement</p>
+    <p class="intro-rounds-item">Round 2: Prop Placement</p>
+  </div>
+</div>
+
+<div class="screen intro-screen" id="screen-intro-4">
+  <p class="intro-text">Remember to design with<br>others in mind too… or don't…</p>
+</div>
+
+<div class="screen intro-screen" id="screen-intro-5">
+  <p class="intro-text">At the end, you'll get to see how<br>much everyone else likes your park!</p>
+</div>
+
+<div class="screen intro-screen" id="screen-intro-6">
+  <p class="intro-text">Time to see what role you are!</p>
+</div>
+
+
+<!-- role assignemnt -->
+<div class="screen" id="screen-card-deal">
+  <div class="deal-bg"></div>
+  <div class="deal-cards" id="deal-cards">
+    <div class="deal-card" style="--rot:-13deg; --tx:-22vw"></div>
+    <div class="deal-card" style="--rot:-4deg;  --tx:-7vw"></div>
+    <div class="deal-card" style="--rot: 4deg;  --tx: 7vw"></div>
+    <div class="deal-card" style="--rot: 13deg; --tx: 22vw"></div>
+  </div>
+</div>
+
+
+<!-- show role stats etc -->
+<div class="screen" id="screen-role-reveal">
+  <div class="reveal-bg"></div>
+  <!-- <h2 class="reveal-heading">YOUR ROLES</h2> -->
+  <div class="reveal-cards" id="reveal-cards"></div>
+</div>
+
+
+<!-- round 1intro-->
+<div class="screen" id="screen-r1-intro">
+  <div class="stage-intro">
+    <div class="si-stage">STAGE 1</div>
+    <div class="si-name">TILE PLACEMENT</div>
+    <div class="si-sub">Place your colored tiles on the board to design your park</div>
+    <div class="si-time">2:00</div>
+  </div>
+</div>
+
+
+<!-- round 1 START -->
+<div class="screen" id="screen-r1-play">
+  <div class="play-layout">
+
+    <div class="play-left">
+      <div class="play-header">
+        <span class="play-stage">STAGE 1 — TILE PLACEMENT</span>
+        <div class="play-timer timer--urgent-ready" id="r1-timer">2:00</div>
+      </div>
+      <div class="play-cam-slot" id="r1-cam-slot"></div>
+    </div>
+
+    <div class="play-right">
+      <div class="play-board-label">LIVE BOARD</div>
+      <div class="play-board" id="r1-board"></div>
+      <div class="play-chips" id="r1-role-chips"></div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- voting rules/onboarding -->
+<div class="screen" id="screen-vote-rules">
+  <div class="vr-content">
+    <h2 class="vr-title">VOTING RULES</h2>
+    <ul class="vr-list">
+      <li>You have <strong>30 seconds</strong> to discuss your design</li>
+      <li>Each role carries a different <strong>Vote Power</strong></li>
+      <li>The role with the <strong>strongest stats</strong> wins the round</li>
+      <li>Advocate for your role's needs!</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- round 1 discussion -->
+<div class="screen" id="screen-r1-discuss">
+  <div class="discuss-layout">
+    <div class="discuss-left">
+      <div class="discuss-header">
+        <h2 class="discuss-title">DISCUSS YOUR DESIGN</h2>
+        <div class="discuss-timer" id="r1d-timer">0:30</div>
+      </div>
+      <div class="discuss-board" id="r1d-board"></div>
+    </div>
+    <div class="discuss-right">
+      <!-- <div class="discuss-chips-label">YOUR ROLES</div> -->
+      <div class="discuss-chips" id="r1d-role-chips"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- round 1 voting results -->
+<div class="screen" id="screen-r1-vote">
+  <div class="adjust-layout">
+    <span class="adjust-round-label">ROUND 1 RESULT</span>
+    <div class="adjust-power-role" id="r1-power-role"></div>
+    <div class="adjust-msg">
+      gets <span class="adjust-sec" id="r1-adjust-sec">10</span> seconds to adjust the board
+    </div>
+    <div class="adjust-others-label">ALL OTHERS DO NOT TOUCH ANYTHING</div>
+    <div class="adjust-others-chips" id="r1-others-chips"></div>
+  </div>
+</div>
+
+
+<!-- round 2 intro -->
+<div class="screen" id="screen-r2-intro">
+  <div class="stage-intro stage-intro--r2">
+    <div class="si-stage">STAGE 2</div>
+    <div class="si-name">PROP PLACEMENT</div>
+    <div class="si-sub">Add objects and props to complete your park design</div>
+    <div class="si-time">2:00</div>
+  </div>
+</div>
+
+
+<!-- round 2 START -->
+<div class="screen" id="screen-r2-play">
+  <div class="play-layout">
+
+    <div class="play-left">
+      <div class="play-header">
+        <span class="play-stage">STAGE 2 — PROP PLACEMENT</span>
+        <div class="play-timer timer--urgent-ready" id="r2-timer">2:00</div>
+      </div>
+      <div class="play-cam-slot" id="r2-cam-slot"></div>
+    </div>
+
+    <div class="play-right">
+      <div class="play-board-label">LIVE BOARD</div>
+      <div class="play-board" id="r2-board"></div>
+      <div class="play-chips" id="r2-role-chips"></div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- round 2 discussion -->
+<div class="screen" id="screen-r2-discuss">
+  <div class="discuss-layout">
+    <div class="discuss-left">
+      <div class="discuss-header">
+        <h2 class="discuss-title">FINAL DISCUSSION</h2>
+        <div class="discuss-timer" id="r2d-timer">0:30</div>
+      </div>
+      <div class="discuss-board" id="r2d-board"></div>
+    </div>
+    <div class="discuss-right">
+      <!-- <div class="discuss-chips-label">YOUR ROLES</div> -->
+      <div class="discuss-chips" id="r2d-role-chips"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- round 2 voting results -->
+<div class="screen" id="screen-r2-vote">
+  <div class="adjust-layout">
+    <span class="adjust-round-label">FINAL RESULT</span>
+    <div class="adjust-power-role" id="r2-power-role"></div>
+    <div class="adjust-msg">
+      gets <span class="adjust-sec" id="r2-adjust-sec">10</span> seconds to adjust the board
+    </div>
+    <div class="adjust-others-label">ALL OTHERS DO NOT TOUCH ANYTHING</div>
+    <div class="adjust-others-chips" id="r2-others-chips"></div>
+  </div>
+</div>
+
+
+<!-- end screen -->
+<div class="screen" id="screen-end">
+  <div class="end-layout">
+    <div class="end-leaf">
+      <img src="image/park-logo.png" alt="PAR[K]TICIPATION logo">
+    </div>
+    <h1 class="end-title">THANK YOU FOR<br>PAR[K]TICIPATING</h1>
+    <p class="end-sub">Here's what others think about your park!</p> 
+    <!-- end screen here needs to be fixed/added for reviews screen stuff -->
+  </div>
+</div>
+
+
+<script src="js/roles.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/camera.js"></script>
+<script src="js/voting.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

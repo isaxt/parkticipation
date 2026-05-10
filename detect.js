@@ -4,18 +4,18 @@ const COLORS = {
   subway_station: { label: 'Subway Station', hex: '#263818' },
   fountain:       { label: 'Fountain',       hex: '#004d99' },
   bench:          { label: 'Bench',          hex: '#6b3300' },
-  concrete_tile:  { label: 'Concrete Tile',  hex: '#9ea7b0' },
-  grass_tile:     { label: 'Grass Tile',     hex: '#d4f5c4' },
-  water_tile:     { label: 'Water Tile',     hex: '#bbdefb' },
-  dirt_tile:      { label: 'Dirt Tile',      hex: '#a08c70' },
-  tree:           { label: 'Tree',           hex: '#28e1ad' },
+  concrete_tile:  { label: 'Concrete Tile',  hex: '#71777e' },
+  grass_tile:     { label: 'Grass Tile',     hex: '#d0f9bb' },
+  water_tile:     { label: 'Water Tile',     hex: '#a8d4f8' },
+  dirt_tile:      { label: 'Dirt Tile',      hex: '#7c5131' },
+  tree:           { label: 'Tree',           hex: '#107a5c' },
   reg_fence:      { label: 'Reg Fence',      hex: '#00ffaa' },
   lights_lamps:   { label: 'Lights/Lamps',   hex: '#ffd700' },
   dog_park:       { label: 'Dog Park',       hex: '#de7a4b' },
   spiked_fence:   { label: 'Spiked Fence',   hex: '#cc0000' },
   bathroom:       { label: 'Bathroom',       hex: '#aa7ae4' },
   playground:     { label: 'Playground',     hex: '#ff6fb7' },
-  test_pink:      { label: 'Test Pink',      hex: '#FFB3C6' },
+  // test_pink:      { label: 'Test Pink',      hex: '#FFB3C6' },
 };
 
 const GRID               = 16; // sampling resolution
@@ -67,7 +67,7 @@ function classifyTile(r, g, b) {
   if (h >= 190 && h <= 222 && s >= satThreshold && s < 120 && v > 210) return 'water_tile';
   if (h >= 22 && h <= 48 && s >= 40 && s < 140 && v >= 130 && v < 220) return 'dirt_tile';
   // pastel pink test color — low-sat pink, kept below playground's s≥75 floor
-  if (h >= 325 && s >= 15 && s < 75 && v >= 200) return 'test_pink';
+  // if (h >= 325 && s >= 15 && s < 80 && v >= 200) return 'test_pink';
   return null;
 }
 
@@ -75,15 +75,15 @@ function classifyTile(r, g, b) {
 function classifyObject(r, g, b) {
   const { h, s, v } = rgbToHsv(r, g, b);
   if (v < blackThreshold) return 'trash_can';
-  if (h >= 100 && h <= 145 && s > 75 && v >= 20 && v < 85) return 'subway_station';
-  if (h >= 198 && h <= 232 && s > 150 && v < 150) return 'fountain';
+  if (h >= 88 && h <= 145 && s > 75 && v >= 20 && v < 85) return 'subway_station';
+  if (h >= 198 && h <= 232 && s > 150 && v < 160) return 'fountain';
   if (h >= 18 && h <= 40 && s > 130 && v >= 40 && v < 140) return 'bench';
-  if (h >= 100 && h <= 145 && s >= 150 && v >= 160) return 'tree';
+  if (h >= 100 && h <= 168 && s >= 150 && v >= 50 && v < 180) return 'tree';
   if (h >= 145 && h <= 178 && s >= 180 && v >= 180) return 'reg_fence';
   if (h >= 42 && h <= 68 && s >= 180 && v >= 180) return 'lights_lamps';
   if (h >= 15 && h <= 42 && s >= 160 && v >= 160) return 'dog_park';
   if ((h < 12 || h >= 348) && s >= 180 && v >= 90) return 'spiked_fence';
-  if (h >= 255 && h <= 298 && s >= 120 && v >= 140) return 'bathroom';
+  if (h >= 255 && h <= 298 && s >= 115 && v >= 140) return 'bathroom';
   if (h >= 298 && h <= 348 && s >= 75 && v >= 180) return 'playground';
   return null;
 }
