@@ -1,19 +1,20 @@
 //state
 const G = {
-  screenIdx : 0,
-  roles     : [],   // 4 assigned roles
-  r1Winner  : null,
-  r2Winner  : null,
-  timer     : null,
-  cameraOk  : false,
+  screenIdx  : 0,
+  roles      : [],
+  r1Winner   : null,
+  r2Winner   : null,
+  timer      : null,
+  cameraOk   : false,
+  finalBoard : null,
 };
 
 const FLOW = [
   'lobby',
   'intro-1', 'intro-2', 'intro-3', 'intro-4', 'intro-5', 'intro-6',
-  'card-deal', 'role-reveal',
+  'role-reveal',
   'r1-intro', 'r1-play', 'vote-rules', 'r1-discuss', 'r1-vote',
-  'r2-intro', 'r2-play', 'r2-discuss', 'r2-vote', 'end',
+  'r2-intro', 'r2-play', 'r2-discuss', 'r2-vote', 'end', 'reviews',
 ];
 
 //func helpers
@@ -34,6 +35,12 @@ function after(ms, fn) {
 }
 function clearPending() {
   _pending.splice(0).forEach(clearTimeout);
+}
+
+function playOneShot(key) {
+  const src = { timer_alarm: 'voiceover/timer_alarm_sound.mp3' }[key];
+  if (!src) return;
+  new Audio(src).play().catch(() => {});
 }
 
 function advance() {
@@ -67,12 +74,11 @@ function updateBoard(el, state) {
 }
 
 // smll card HTML (used in discussion/vote screens)
-function roleChip(role) {
+function roleChip(role, i) {
   return `
     <div class="role-chip">
+      <div class="role-chip-player">Player ${i + 1}</div>
       <img src="${role.card}" alt="${role.name}" class="role-chip-img">
-      <div class="role-chip-name">${role.name}</div>
-      <div class="role-chip-dots">${renderVoteDots(role.votePower)}</div>
     </div>
   `;
 }
@@ -125,19 +131,8 @@ const ENTERS = {
   'intro-5'() { AudioMgr.play('initial_5', advance); },
   'intro-6'() { AudioMgr.play('initial_6', advance); },
 
-  'card-deal'() {
-    G.roles = pickFourRoles();
-    const container = $('deal-cards');
-    if (container) {
-      container.querySelectorAll('.deal-card').forEach((card, i) => {
-        card.style.animationDelay = `${i * 0.18}s`;
-        card.classList.add('deal-card--rise');
-      });
-    }
-    after(3200, advance);
-  },
-
   'role-reveal'() {
+    G.roles = pickFourRoles();
     const container = $('reveal-cards');
     if (!container) return;
     container.innerHTML = '';
@@ -145,10 +140,9 @@ const ENTERS = {
       const wrapper = document.createElement('div');
       wrapper.className = 'flip-card';
       wrapper.innerHTML = `
+        <div class="flip-card-label">Player ${i + 1}</div>
         <div class="flip-inner" id="flip-${i}">
-          <div class="flip-front">
-            <img src="image/GUI/card-back.png" alt="card back">
-          </div>
+          <div class="flip-front"></div>
           <div class="flip-back">
             <img src="${role.card}" alt="${role.name}">
           </div>
@@ -159,7 +153,7 @@ const ENTERS = {
         document.getElementById('flip-' + i)?.classList.add('flipped');
       });
     });
-    after(800 + G.roles.length * 900 + 2500, advance);
+    after(11000 + G.roles.length * 900 + 2500, advance);
   },
 
   'r1-intro'() {
@@ -175,7 +169,12 @@ const ENTERS = {
     Camera.startTiles();
 
     G.timer = new GameTimer($('r1-timer'), {
+      onTick(remaining) {
+        if (remaining === 30) AudioMgr.play('thirty_sec');
+        if (remaining === 5)  AudioMgr.play('five_countdown');
+      },
       onComplete() {
+        playOneShot('timer_alarm');
         Camera.stopTiles();
         advance();
       },
@@ -242,7 +241,12 @@ const ENTERS = {
     Camera.startObjects();
 
     G.timer = new GameTimer($('r2-timer'), {
+      onTick(remaining) {
+        if (remaining === 30) AudioMgr.play('thirty_sec');
+        if (remaining === 5)  AudioMgr.play('five_countdown');
+      },
       onComplete() {
+        playOneShot('timer_alarm');
         Camera.stopObjects();
         advance();
       },
@@ -293,8 +297,14 @@ const ENTERS = {
   },
 
   end() {
+    G.finalBoard = Camera.getBoardState();
     Camera.stopStream();
     AudioMgr.stop();
+    after(3000, advance);
+  },
+
+  reviews() {
+    buildReviews(G.finalBoard);
   },
 };
 

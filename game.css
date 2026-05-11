@@ -333,14 +333,27 @@ html, body {
   justify-content: center;
 }
 .flip-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
   width: 17vw;
   max-width: 240px;
-  aspect-ratio: 2.5 / 3.5;
   perspective: 1200px;
 }
 
+.flip-card-label {
+  font-family: var(--font);
+  font-size: clamp(0.65rem, 1.1vw, 0.9rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+}
+
 .flip-inner {
-  width: 100%; height: 100%;
+  width: 100%;
+  aspect-ratio: 2.5 / 3.5;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
@@ -360,6 +373,14 @@ html, body {
   box-shadow: 0 10px 35px rgba(0,0,0,0.4);
 }
 .flip-back { transform: rotateY(180deg); }
+
+.flip-front {
+  background: var(--dk-green);
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 2px, transparent 2px, transparent 12px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 2px, transparent 2px, transparent 12px);
+  border: 3px solid rgba(255,255,255,0.15);
+}
 
 .flip-front img,
 .flip-back img {
@@ -475,6 +496,7 @@ html, body {
   width: 100%;
   height: 100%;
   position: relative;
+  transform: scaleX(-1);
 }
 #game-video {
   width: 100%; height: 100%;
@@ -521,34 +543,36 @@ html, body {
 
 .play-chips {
   display: flex;
-  flex-direction: column;
-  gap: 0.8vh;
+  flex-direction: row;
+  gap: 1vw;
+  justify-content: flex-start;
+  overflow-x: auto;
 }
 
-
-/* role card CHIPS (small card + dots, used in play/discuss) */
+/* role card CHIPS (small card, used in play/discuss) */
 .role-chip {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1vw;
-  background: rgba(255,255,255,0.06);
-  border-radius: 8px;
-  padding: 0.6vh 1vw;
-}
-.role-chip-img {
-  width: clamp(28px, 4vw, 52px);
-  height: auto;
-  border-radius: 4px;
+  gap: 0.4vh;
+  border-radius: 6px;
+  overflow: hidden;
   flex-shrink: 0;
 }
-.role-chip-name {
-  font-size: clamp(0.55rem, 0.9vw, 0.78rem);
+.role-chip-player {
+  font-family: var(--font);
+  font-size: clamp(0.55rem, 0.9vw, 0.75rem);
   font-weight: 700;
-  letter-spacing: 0.06em;
-  flex: 1;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
 }
-.role-chip-dots { display: flex; gap: 3px; }
+.role-chip-img {
+  width: clamp(80px, 12vw, 160px);
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
 
 /* Vote dots (shared) */
 .vdot {
@@ -824,4 +848,166 @@ html, body {
   color: rgba(255,255,255,0.5);
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   REVIEWS SCREEN — Google Maps style
+   ══════════════════════════════════════════════════════════════════════════════ */
+#screen-reviews {
+  background: #f0f0ee;
+  overflow-y: auto;
+  align-items: stretch;
+  justify-content: flex-start;
+  color: #202124;
+}
+
+.gm-wrap {
+  width: min(680px, 100%);
+  margin: 0 auto;
+  padding: 0 0 6vh;
+}
+
+/* Place header */
+.gm-place-header {
+  display: flex;
+  align-items: center;
+  gap: 1.4vw;
+  padding: 3vh 4vw 2vh;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.gm-place-logo {
+  width: clamp(52px, 8vw, 80px);
+  height: clamp(52px, 8vw, 80px);
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  border: 1px solid #e0e0e0;
+}
+
+.gm-place-name {
+  font-family: var(--font);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  color: #202124;
+  letter-spacing: 0.01em;
+}
+
+.gm-place-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0.3vh 0;
+}
+
+.gm-rating-num {
+  font-size: clamp(1rem, 1.8vw, 1.4rem);
+  font-weight: 700;
+  color: #202124;
+}
+
+.gm-rating-stars {
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  color: #fbbc04;
+  letter-spacing: 0.05em;
+}
+
+.gm-rating-count {
+  font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+  color: #70757a;
+}
+
+.gm-place-type {
+  font-size: clamp(0.65rem, 1vw, 0.8rem);
+  color: #70757a;
+}
+
+.gm-divider {
+  height: 8px;
+  background: #e8eaed;
+}
+
+/* Review cards */
+.gm-reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.gm-review-card {
+  background: #fff;
+  padding: 2vh 4vw;
+  border-bottom: 1px solid #e8eaed;
+}
+
+.gm-reviewer-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2vw;
+  margin-bottom: 1vh;
+}
+
+.gm-avatar {
+  width: clamp(38px, 5vw, 56px);
+  height: clamp(38px, 5vw, 56px);
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid #e0e0e0;
+}
+
+.gm-reviewer-name {
+  font-size: clamp(0.8rem, 1.3vw, 1rem);
+  font-weight: 700;
+  color: #202124;
+}
+
+.gm-stars {
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  letter-spacing: 0.04em;
+  margin-top: 0.2vh;
+}
+.gm-stars--pos { color: #fbbc04; }
+.gm-stars--neg { color: #ea4335; }
+
+.gm-review-text {
+  font-size: clamp(0.78rem, 1.2vw, 0.95rem);
+  color: #3c4043;
+  line-height: 1.55;
+  margin: 0 0 1.2vh;
+}
+
+.gm-helpful-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+}
+
+.gm-helpful-label {
+  font-size: clamp(0.65rem, 0.95vw, 0.8rem);
+  color: #70757a;
+}
+
+.gm-helpful-btn {
+  background: none;
+  border: 1px solid #dadce0;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: clamp(0.7rem, 1vw, 0.85rem);
+  cursor: pointer;
+  color: #3c4043;
+  transition: background 0.15s;
+}
+.gm-helpful-btn:hover { background: #f1f3f4; }
+.gm-helpful-btn--active { background: #e8f0fe; border-color: #4285f4; color: #4285f4; }
+
+.gm-empty {
+  text-align: center;
+  color: #70757a;
+  padding: 4vh 2vw;
+  font-size: 0.95rem;
 }

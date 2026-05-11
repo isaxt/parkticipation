@@ -167,7 +167,7 @@ const Camera = (() => {
       }
     }
 
-    // Fine grid
+    // 16x16 grid
     _overlayCtx.strokeStyle = 'rgba(255,255,255,0.15)';
     _overlayCtx.lineWidth   = 1;
     _overlayCtx.beginPath();
@@ -177,7 +177,7 @@ const Camera = (() => {
     }
     _overlayCtx.stroke();
 
-    // Major grid
+    // 8x8 grid
     _overlayCtx.strokeStyle = 'rgba(255,255,255,0.65)';
     _overlayCtx.lineWidth   = 2;
     _overlayCtx.beginPath();
